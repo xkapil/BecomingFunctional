@@ -1,4 +1,4 @@
-package io.xkapil.good_code.step2_polymorphism;
+package io.xkapil.chap2.good_code.step3_generics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,12 @@ public class Customer {
         return getEnabledCustomerInfoByField(new Customer2DomainConverter());
     }
 
-    private static List<String> getEnabledCustomerInfoByField(Converter converter) {
-        List<String> list = new ArrayList<>();
+    public static List<Customer> getEnabledCustomers() {
+        return getEnabledCustomerInfoByField(new Customer2CustomerConverter());
+    }
+
+    private static <T> List<T> getEnabledCustomerInfoByField(Converter<Customer, T> converter) {
+        List<T> list = new ArrayList<>();
         for (Customer customer : Customer.customers) {
             if (customer.enabled) {
                 list.add(converter.convert(customer));
@@ -37,30 +41,37 @@ public class Customer {
         return list;
     }
 
-    private interface Converter {
-        public String convert(Customer customer);
+    private interface Converter<S, T> {
+        public T convert(S customer);
     }
 
-    private static class Customer2NameConverter implements Converter {
+    private static class Customer2NameConverter implements Converter<Customer, String> {
         @Override
         public String convert(Customer customer) {
             return customer.name;
         }
     }
 
-    private static class Customer2CityConverter implements Converter {
+    private static class Customer2CityConverter implements Converter<Customer, String> {
         @Override
         public String convert(Customer customer) {
             return customer.city;
         }
     }
 
-    private static class Customer2DomainConverter implements Converter {
+    private static class Customer2DomainConverter implements Converter<Customer, String> {
         @Override
         public String convert(Customer customer) {
             return customer.domain;
         }
     }
+
+    /* This wouldn't have been possible without Generics*/
+    private static class Customer2CustomerConverter implements Converter<Customer, Customer> {
+        @Override
+        public Customer convert(Customer customer) {
+            return customer;
+        }
+    }
+
 }
-
-

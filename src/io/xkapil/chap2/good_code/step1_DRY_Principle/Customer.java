@@ -1,4 +1,4 @@
-package io.xkapil.good_code.step1_DRY_Principle;
+package io.xkapil.chap2.good_code.step1_DRY_Principle;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.xkapil.good_code.step3_generics;
+package io.xkapil.chap2.good_code.step2_polymorphism;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,8 @@ public class Customer {
         return getEnabledCustomerInfoByField(new Customer2DomainConverter());
     }
 
-    private static <T> List<T> getEnabledCustomerInfoByField(Converter<Customer, T> converter) {
-        List<T> list = new ArrayList<>();
+    private static List<String> getEnabledCustomerInfoByField(Converter converter) {
+        List<String> list = new ArrayList<>();
         for (Customer customer : Customer.customers) {
             if (customer.enabled) {
                 list.add(converter.convert(customer));
@@ -37,29 +37,30 @@ public class Customer {
         return list;
     }
 
-    private interface Converter<S, T> {
-        public T convert(S customer);
+    private interface Converter {
+        public String convert(Customer customer);
     }
 
-    private static class Customer2NameConverter implements Converter<Customer, String> {
+    private static class Customer2NameConverter implements Converter {
         @Override
         public String convert(Customer customer) {
             return customer.name;
         }
     }
 
-    private static class Customer2CityConverter implements Converter<Customer, String> {
+    private static class Customer2CityConverter implements Converter {
         @Override
         public String convert(Customer customer) {
             return customer.city;
         }
     }
 
-    private static class Customer2DomainConverter implements Converter<Customer, String> {
+    private static class Customer2DomainConverter implements Converter {
         @Override
         public String convert(Customer customer) {
             return customer.domain;
         }
     }
-
 }
+
+

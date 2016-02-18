@@ -1,4 +1,4 @@
-package io.xkapil.bad_code;
+package io.xkapil.chap2.bad_code;
 
 import java.util.ArrayList;
 import java.util.List;
